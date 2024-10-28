@@ -2,7 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 
@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 50px;
     padding: 50px 10px;
 }
 
@@ -39,21 +40,23 @@ form{
 
 
 label{
-    font-size: 22px;
+    font-size: 20px;
     margin-bottom: 7px;
 }
 
 
 input{
-    height: 40px;
+    height: 45px;
     border: none;
     outline: 1px solid lightgray;
     border-radius: 7px;
+    font-size: 20px;
+    padding: 0 15px;
 }
 
 
 select{
-    height: 40px;
+    height: 45px;
     border: none;
     outline: 1px solid lightgray;
     border-radius: 7px;
@@ -63,10 +66,47 @@ select{
 
 
 
-
-
 @media screen and (max-width: 760px) {
     form{
         width: 100%;
     }
+}
+
+
+
+button{
+    width: fit-content;
+    padding: 10px 20px;
+    font-size: 20px;
+    color: white;
+    background-color: rgb(94, 94, 250);
+    border: none;
+    border-radius: 10px;
+}
+
+
+p#err{
+    font-size: 14px;
+    color: red;
+}
+
+
+
+
+/* TABLE STYLE */
+
+table{
+    width: 700px;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-collapse: collapse;
+    font-size: 20px;
+}
+
+
+td, th {
+    height: 50px;
+    border: 1px solid lightgray;
+    text-align: left;
+    padding-left: 10px;
 }
