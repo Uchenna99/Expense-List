@@ -3,19 +3,33 @@ import { selectItems } from "./Select"
 import {z} from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ExList } from "./ExpenseList";
+import { CategoryFilter } from "./CategoryFilter";
+import { useState } from "react";
 
 
 const schema = z.object({
     description: z.string().min(3, {message: 'Description should be at least 3 characters.'}).max(50),
-    amount: z.number({invalid_type_error: 'Amount is required.'}).min(100, {message: 'Amount should be at least 100 Naira'}).max(5_000_000),
+    amount: z.number({invalid_type_error: 'Amount is required.'}).min(50, {message: 'Amount should be at least 50 Naira'}).max(4_000_000),
     select: z.enum(['Groceries', 'Entertainment', 'Utilities'], {errorMap: ()=>({message: 'Category is required'})})
 })
 
 type EformData = z.infer<typeof schema>;
 
 export const ExForm =()=>{
-
     const { register, handleSubmit, formState: {errors} } = useForm<EformData>({ resolver: zodResolver(schema)})
+
+    const [chosenCategory, setChosenCategory] = useState('')
+
+    const [selectedFilter, setSelectedFilter] = useState(
+        [ 
+            {description: 'TV', amount: 100_000, category: 'Entertainment'},
+            {description: 'Carrots', amount: 3000, category: 'Groceries'},
+            {description: 'Fridge', amount: 600_000, category: 'Utilities'},
+            {description: 'Rice', amount: 80_000, category: 'Groceries'},
+         ]
+    );
+  
+    const showExpenses = chosenCategory? selectedFilter.filter((exp)=> exp.category === chosenCategory) : selectedFilter;
 
     return(
         <>
@@ -47,7 +61,9 @@ export const ExForm =()=>{
                     <button type="submit" > Submit </button>
                 </form>
 
-                <ExList />
+                <CategoryFilter selectCategory={(choice)=> setChosenCategory(choice)} />
+
+                <ExList expenses={showExpenses} />
 
             </div>
         </>

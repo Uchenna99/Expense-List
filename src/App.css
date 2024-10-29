@@ -66,14 +66,6 @@ select{
 
 
 
-@media screen and (max-width: 760px) {
-    form{
-        width: 100%;
-    }
-}
-
-
-
 button{
     width: fit-content;
     padding: 10px 20px;
@@ -84,10 +76,18 @@ button{
     border-radius: 10px;
 }
 
+button:hover{
+    transition: 300ms;
+    background-color: white;
+    outline: 2px solid rgb(94, 94, 250);
+    color: rgb(94, 94, 250);
+}
+
 
 p#err{
     font-size: 14px;
     color: red;
+    outline: none;
 }
 
 
@@ -109,4 +109,38 @@ td, th {
     border: 1px solid lightgray;
     text-align: left;
     padding-left: 10px;
+}
+
+
+button#del{
+    padding: 7px 15px;
+    background-color: transparent;
+    color: red;
+    border: 1px solid red;
+    font-size: 16px;
+}
+
+button#del:hover{
+    transition: 300ms;
+    background-color: red;
+    color: white;
+    outline: 1px solid red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 760px) {
+    form{
+        width: 100%;
+    }
 }
