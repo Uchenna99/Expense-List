@@ -16,7 +16,7 @@ const schema = z.object({
 type EformData = z.infer<typeof schema>;
 
 export const ExForm =()=>{
-    const { register, handleSubmit, formState: {errors} } = useForm<EformData>({ resolver: zodResolver(schema)})
+    const { register, handleSubmit, formState: {errors}, reset } = useForm<EformData>({ resolver: zodResolver(schema)})
 
     const [chosenCategory, setChosenCategory] = useState('')
 
@@ -34,8 +34,7 @@ export const ExForm =()=>{
     return(
         <>
             <div className="form-wrap">
-                <form onSubmit={handleSubmit((data)=> selectedFilter.push(data)
-                )} >
+                <form onSubmit={handleSubmit((data)=> { selectedFilter.push(data); reset(); })} >
                     <div className="input-wrap">
                         <label htmlFor="description">Description</label>
                         <input id="description" type="text" {...register('description')} />
