@@ -10,7 +10,7 @@ import { useState } from "react";
 const schema = z.object({
     description: z.string().min(3, {message: 'Description should be at least 3 characters.'}).max(50),
     amount: z.number({invalid_type_error: 'Amount is required.'}).min(50, {message: 'Amount should be at least 50 Naira'}).max(4_000_000),
-    select: z.enum(['Groceries', 'Entertainment', 'Utilities'], {errorMap: ()=>({message: 'Category is required'})})
+    category: z.enum(['Groceries', 'Entertainment', 'Utilities'], {errorMap: ()=>({message: 'Category is required'})})
 })
 
 type EformData = z.infer<typeof schema>;
@@ -34,7 +34,8 @@ export const ExForm =()=>{
     return(
         <>
             <div className="form-wrap">
-                <form onSubmit={handleSubmit((data)=> console.log(data))} >
+                <form onSubmit={handleSubmit((data)=> selectedFilter.push(data)
+                )} >
                     <div className="input-wrap">
                         <label htmlFor="description">Description</label>
                         <input id="description" type="text" {...register('description')} />
@@ -49,13 +50,13 @@ export const ExForm =()=>{
 
                     <div className="input-wrap">
                         <label htmlFor="select" >Category</label>
-                        <select id="select" {...register('select')} >
+                        <select id="select" {...register('category')} >
                             <option value="">Select category</option>
                             {selectItems.map((item)=> 
                                 <option key={item}> {item} </option>
                             )}
                         </select>
-                        {errors.select && <p id="err"> {errors.select.message} </p> }
+                        {errors.category && <p id="err"> {errors.category.message} </p> }
                     </div>
 
                     <button type="submit" > Submit </button>
@@ -63,7 +64,7 @@ export const ExForm =()=>{
 
                 <CategoryFilter selectCategory={(choice)=> setChosenCategory(choice)} />
 
-                <ExList expenses={showExpenses} />
+                <ExList expenses={showExpenses} onDelete={(item)=>setSelectedFilter(selectedFilter.filter((exp)=> exp.description != item))} />
 
             </div>
         </>

@@ -6,9 +6,21 @@ export interface ExpObject {
 
 export interface Props {
     expenses: ExpObject[];
+    onDelete: (item: string)=> void;
 }
 
-export const ExList =({expenses} : Props)=>{
+export const ExList =({expenses, onDelete} : Props)=>{
+    if(expenses.length === 0){return null}
+
+    const sumTotal =(expenses: ExpObject[]): string=>{
+        let total = 0
+        expenses.forEach((expense)=> {
+            total += expense.amount
+        })
+        return `₦ ${total}`;
+    }
+
+    
     return(
         <>
             <table>
@@ -28,7 +40,7 @@ export const ExList =({expenses} : Props)=>{
                             <td> {expense.amount} </td>
                             <td> {expense.category} </td>
                             <td>
-                                <button id="del">Delete</button>
+                                <button id="del" onClick={()=>onDelete(expense.description)} >Delete</button>
                             </td>
                         </tr>
                     ))}
@@ -37,7 +49,7 @@ export const ExList =({expenses} : Props)=>{
                 <tfoot>
                     <tr>
                         <td>Total</td>
-                        <td> Total amount </td>
+                        <td> {sumTotal(expenses)} </td>
                         <td></td>
                         <td></td>
                     </tr>
